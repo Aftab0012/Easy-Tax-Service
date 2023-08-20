@@ -1,25 +1,60 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import FormList from "./Components/FormList";
+import AddFormModal from "./Components/AddFormModal";
+import "./styles.css";
 
-function App() {
+/**
+ * Main App component.
+ */
+const App = () => {
+  // State to manage the list of forms and modal visibility
+  const [forms, setForms] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  // Function to show the add form modal
+  const showModal = () => {
+    setModalVisible(true);
+  };
+
+  // Function to hide the add form modal
+  const hideModal = () => {
+    setModalVisible(false);
+  };
+
+  // Callback function to handle form submission
+  const handleFormSubmit = (newForm) => {
+    setForms([...forms, newForm]);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div className="header">
+        <div className="brand-name">
+          {/* Logo */}
+          <img
+            className="logo-img"
+            src="https://img.freepik.com/free-vector/tax-service-branding-identity-corporate-vector-logo-bundle-design_460848-13825.jpg"
+            alt="Logo"
+          />
+        </div>
+        {/* Button to open the modal */}
+        <button className="button" onClick={showModal}>
+          Add Form
+        </button>
+      </div>
+
+      {/* Display the list of forms */}
+      <FormList forms={forms} />
+
+      {/* AddFormModal component */}
+      <AddFormModal
+        visible={modalVisible}
+        showModal={showModal}
+        hideModal={hideModal}
+        onFormSubmit={handleFormSubmit}
+      />
     </div>
   );
-}
+};
 
 export default App;
